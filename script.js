@@ -15,19 +15,28 @@ const btnRollDiceEl = document.querySelector('.btn--roll');
 const btnNewGameEl = document.querySelector('.btn--new');
 const btnHoldEl = document.querySelector('.btn--hold');
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let isPlaying = true;
+let scores, currentScore, activePlayer, isPlaying;
 
-score1El.textContent = scores[0];
-score2El.textContent = scores[1];
+const init = function () {
+  player1El.classList.remove('player--winner');
+  player2El.classList.remove('player--winner');
+  player1El.classList.add('player--active');
+  player2El.classList.remove('player--active');
 
-const hideDiceImg = function () {
   diceImgEl.classList.add('hidden');
+
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  isPlaying = true;
+
+  score1El.textContent = scores[0];
+  score2El.textContent = scores[1];
+  currentScore1El.textContent = currentScore;
+  currentScore2El.textContent = currentScore;
 };
 
-hideDiceImg();
+init();
 
 const setCurrentScore = function (aScore) {
   document.getElementById(`current--${activePlayer}`).textContent = aScore;
@@ -79,9 +88,11 @@ btnHoldEl.addEventListener('click', function () {
       activePlayerEl.classList.add('player--winner');
       activePlayerEl.classList.remove('player--active');
 
-      hideDiceImg();
+      diceImgEl.classList.add('hidden');
     } else {
       switchPlayer();
     }
   }
 });
+
+btnNewGameEl.addEventListener('click', init);
